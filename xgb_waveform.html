@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>XGBoost Waveform HTML Page</title>
+    </head>
+
+    <body>
+        <h1>XGBoost Efficiency Analysis for {{waveform}}</h1>
+        <hr>
+        
+        <div class="box">
+            <h3>Efficiency Curves</h3>
+                {% for file in eff_plots %}
+        		    <a target="_blank" href="{{file}}">
+        		    <img src="{{file}}"
+        		         width = 650
+        		         height = 455>
+        		    </a>
+        	    {% endfor %}
+        </div>
+    
+    </body>
+    
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>XGBoost HTML Page</title>
+    </head>
+
+    <body>
+        <h1> XGBoost < {{xgb_project_summary['Classifier name']}} > Training and Evaluation Report </h1>
+        <hr>
+        
+            <div class="box">
+            <h2>Project Summary</h2>
+            <p><tr><td>Project parameters: </td><td><a href="{{params_dir}}">link</a></td></tr></p>
+            
+                <div class="row">
+                
+                    <div class="column">
+                    <h3><center>BKG</center></h3>
+                        <table>
+                        {% for key, value in bkg_dag_infos.items() %}
+                            <tr><td><strong>{{key}}:</strong> </td><td>{{value}}</td></tr>
+                        {% endfor %} 
+                            <tr><td><strong>Analysis:</strong> </td><td>BKG</td></tr>
+                            <tr><td><strong>DAG metrics:</strong> </td><td><a href="{{bkg_metrics_file}}">link</a></td></tr>
+                            <tr><td><strong>Timeslides:</strong> </td><td>{{timeslides}}</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="column">
+                    <h3><center>INJ</center></h3>
+                        <table>
+                        {% for key, value in inj_dag_infos.items() %}
+                            <tr><td><strong>{{key}}:</strong> </td><td>{{value}}</td></tr>
+                        {% endfor %} 
+                            <tr><td><strong>Analysis:</strong> </td><td>INJ</td></tr>
+                            <tr><td><strong>DAG metrics:</strong> </td><td><a href="{{inj_metrics_file}}">link</a></td></tr>
+                            <tr><td><strong>Num Inj:</strong> </td><td>{{num_inj}}</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="column">
+                    <h3><center>XGB</center></h3>
+                        <table>
+                        {% for key, value in xgb_project_summary.items() %}
+                            <tr><td><strong>{{key}}:</strong> </td><td>{{value}}</td></tr>
+                        {% endfor %} 
+                        </table>
+                    </div>
+                   
+                </div>
+                
+            </div>
+
+            <div class="box">
+            <h2>Training</h2>
+            
+                <div class="box">
+                <div class="row">
+                
+                    <div class="column2">
+                    <h3><center>Waveforms used for training</center></h3>
+                        <ul>
+                        {% for wvf in training_waveforms %}
+                            <li>{{wvf}}</li>
+                        {% endfor %}
+                        </ul>
+                        <h4><center>
+                        This is {{xgb_project_summary['Num waveforms used for training']}} of the total injected waveforms. 
+                        Accordingly, {{training_percentage}}% of the background data was used for training.
+                        </center></h4>  
+                    </div>
+                    
+                    <div class="column2">
+                    <h3><center>Waveforms NOT used for training</center></h3>
+                        <ul>
+                        {% for wvf in testing_waveforms %}
+                            <li>{{wvf}}</li>
+                        {% endfor %}
+                        </ul>
+                        <h4><center> 
+                        {{testing_percentage}}% of the background data was used for evaluation.
+                        </center></h4>
+                    </div>
+                
+                </div>
+                </div> 
+ 
+                <div class="box">           
+                    <h3>XGBoost, machine learning parameters</h3>
+                        <table>
+                        {% for key, value in ML_params.items() %}
+                            <tr><td><strong>{{key}}:</strong> </td><td>{{value}}</td></tr>
+                        {% endfor %} 
+                        </table>
+                        <p>To view the full list of machine learning parameters for the XGBClassifier, click <a href="{{all_ml_params}}">here</a>.</p>
+                </div>
+            
+                <div class="box">
+                    <h3>Machine learning metric plots</h3>
+                        {% for file in MLmets_plots %}
+                		    <a target="_blank" href="{{file}}">
+                		    <img src="{{file}}"
+                		         width = 500
+                		         height = 350>
+                		    </a>
+                	    {% endfor %}
+                </div>
+                
+            </div>
+            
+            <div class="box">
+            <h2>Evaluation</h2>
+            
+                <div class="box">
+                <h3>Results summary</h3>
+                    <table>
+                     {% for key, value in eval_summary.items() %}
+                         <tr><td><strong>{{key}}:</strong> </td><td>{{value}}</td></tr>
+                     {% endfor %}
+                         <tr><td><strong>Average hrss@50% improvement over PySTAMPAS:</strong></td> <td><a href="{{improvement_bar}}">{{hrssimprovoverPys}}%</a></td></tr>
+                     </table>
+                     
+                </div> 
+                
+                <div class="box">
+                <h3>Detection statistic performance comparison</h3>
+                     
+                    <p>Left of the the threshold (black line) in the first two plots demonstrates what the pipeline dicards to acheive a desired FAR.</p>
+          		    <a target="_blank" href="{{thres_plot}}">
+          		    <img src="{{thres_plot}}"
+          		         width = 750
+          		         height = 350>
+          		    </a>
+          		    <a target="_blank" href="{{histscatter}}">
+          		    <img src="{{histscatter}}"
+          		         width = 500
+          		         height = 500>
+          		    </a>
+            	    
+            	    <div class="row">
+                
+                	    <div class="column2">
+                	    <h3>p_lambda</h3>
+                    	    <table>
+                    	    {% for key, value in plambda_metrics.items() %}
+                        	    <tr><td><strong>{{key}}:</strong> </td><td>{{value}}</td></tr>
+                    	    {% endfor %}
+                    	    </table>
+                        </div>	   
+                        
+                        <div class="column2">
+                        <h3>p_chi</h3>
+                            <table>
+                            {% for key, value in pchi_metrics.items() %}
+                                <tr><td><strong>{{key}}:</strong> </td><td>{{value}}</td></tr>
+                    	    {% endfor %}
+                    	    </table> 
+                        </div>
+                                    	
+            	    </div>
+                
+                </div>
+                
+                <div class="box">
+                <h3>Efficiency Curves</h3>
+                    <p>XGBoost detection efficiency improvement over PySTAMPAS per waveform. Click on a waveform to see the efficiency curve.</p>
+                    <table class=tablestage1>
+                        <tr>
+                            <th>Waveform</th>
+                            <th>% improv over PySTAMPAS</th>
+                            <th>Mean frequency [Hz]</th>
+                            <th>Duration [s]</th>
+                            <th>Nominal hrss</th>
+                            <th>Nominal distance [Mpc]</th>
+                            <th>PyS hrss@50%</th>
+                            <th>XGB hrss@50%</th>
+                            <th>Max hrss@50%</th>
+                            <th>PyS Dist@50%</th>
+                            <th>XGB Dist@50%</th>
+                            <th>Max Dist@50%</th>
+                        </tr>
+                        
+                        {% for i in range(0, n_waveforms) %}
+                        <tr>
+                            <td>{{waveforms[i]}}</td>
+                            {% set wvf_improv_dict = wvf_improv[i] %}
+                            {% for key, value in wvf_improv_dict.items() %}
+                                <td><a href="{{waveform_dir[i]}}"><strong><center>{{value}}</center></strong></a></td>
+                			{% endfor %}
+                            <td><center>{{mean_freqs[i]}}</center></td>
+                			<td><center>{{'%0.1f'| format(durations[i]|float)}}</center></td>
+                            <td><center>{{hrss0[i]}}</center></td>
+                            <td><center>{{dist0[i]}}</center></td>
+                            <td><center>{{'%0.2e'| format(hrss_50_pys[i]|float)}}</center></td>
+                            <td><center>{{'%0.2e'| format(hrss_50_xgb[i]|float)}}</center></td>
+                            <td><center>{{'%0.2e'| format(hrss_50_max[i]|float)}}</center></td>
+                            <td><center>{{'%0.2e'| format(dist_50_pys[i]|float)}}</center></td>
+                			<td><center>{{'%0.2e'| format(dist_50_xgb[i]|float)}}</center></td>
+                            <td><center>{{'%0.2e'| format(dist_50_max[i]|float)}}</center></td>
+            			</tr>
+                        {% endfor %}
+                        
+                    </table>
+                </div>
+            </div>
+            
+    </body>
+</html>

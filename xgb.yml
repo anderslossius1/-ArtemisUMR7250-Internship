@@ -1,0 +1,167 @@
+###=========## :::::::: XGBOOST MODEL CONFIGURATION :::::::: ###=========##
+
+# User advice: modify the START/STOP fields to configure where to train and evaluate the ML model. 
+START : 1185141618 # Same start as INJ, BKG & ZL for PHASE 1 - NOT USED IN PHASE 2
+STOP  : 1186351218 # Same STOP as INJ, BKG & ZL for PHASE 1 - NOT USED IN PHASE 2 
+RUN   : O2
+IFOS  : [H1, L1]
+
+###=========## :::::::: PARAMETERS FOR TRAINING :::::::: ###=========##
+
+## ::: NAME OF CLASSIFIER AND PHASE 1 PROJECT ::: ##
+## ::: IT IS ESSENTIAL THIS IS A UNIQUE NAME  ::: ##
+CLASSIFIER_NAME : 
+
+## ::: INPUT / OUTPUT ::: ##
+
+# User advice: leave these fields unchanged
+INJ_PARAMS_DIR     : params/inj.yml     # Project's injection parameter path
+BKG_PARAMS_DIR     : params/bkg.yml     # Project's background parameter path
+ZL_PARAMS_DIR      : params/zerolag.yml # Project's zerolag parameter path
+XGB_DIR            : xgboost            # Path to all files created during XGBoost analysis
+XGB_PREPROC_DIR    : xgboost/preproc    # Path to inj and bkg DataFrames
+
+# Modify ALBERT.EINSETIN and PROJECT_NAME so HTML pages are exported in your public_html directory
+HTML_DIR  : /home/ALBERT.EINSETIN/public_html/PySTAMPAS/PROJECT_NAME 
+
+## ::: TRAINING DATA FORMAT OPTIONS ::: ##
+
+FMEAN_FRANGE  : True     # Train model with: 'True'(recommended) -> mean/range, 'False' ->  min/max frequencies
+
+## ::: CLASSIFIER ::: ##
+
+XGB_CLASSIFIER_PARAMS:
+# User advice: leave field unchanged
+    MAX_DEPTH     : 12        # XGB tree maximum depth, 12 is recommended
+    VERBOSITY     : 0         # The degree of verbosity. Valid values are 0 (silent) - 3 (debug).
+    REPRODUCEABLE : False     # Setting 'REPRODUCEABLE' to 'True' limits the random generators to a single seed.
+    STATE_ID      : 42        # The random number seed is given by 'STATE_ID'. (only relevant if REPRODUCEABLE=True)
+
+## ::: TRAINING LIST ::: ##
+
+# User advice: Type 'yes' next to each waveform you desire to train the model with.
+TRAINING_LIST: 
+## ::: ADI ::: ##                         
+    adiA                 : 
+    adiB                 : 
+    adiC                 : 
+    adiD                 : 
+    adiE                 : 
+    adiF                 : 
+## ::: BAR MODES ::: ##
+    barmodesA            : 
+    barmodesB            : 
+    barmodesC            : 
+    barmodesD            : 
+    barmodesE            : 
+    barmodesF            : 
+    barmodesG            : 
+    barmodesH            : 
+    barmodesI            : 
+    barmodesJ            : 
+    barmodesK            : 
+    barmodesL            : 
+    barmodesM            : 
+    barmodesN            : 
+    barmodesO            : 
+    barmodesP            : 
+    barmodesQ            : 
+    barmodesR            : 
+    barmodesS            : 
+    barmodesT            : 
+    barmodesU            : 
+    barmodesV            : 
+    barmodesW            : 
+    barmodesX            : 
+## ::: GAMMA RAY BURST ::: ##
+    GRBPlateauA          : 
+    GRBPlateauB          : 
+    GRBPlateauC          : 
+    GRBPlateauD          : 
+    GRBPlateauE          :  
+    GRBPlateauF          : 
+    GRBplateauShort      : 
+## ::: ISCO CHIRP ::: ##
+    ISCOchirpA           : 
+    ISCOchirpB           : 
+    ISCOchirpC           : 
+## ::: MAGNETAR ::: ##
+    magnetarD            : 
+    magnetarE            : 
+    magnetarF            : 
+    magnetarG            : 
+## ::: NCSA-CAM ::: ##   
+    NCSACAM_A            : 
+    NCSACAM_B            : 
+    NCSACAM_C            : 
+    NCSACAM_D            : 
+    NCSACAM_E            : 
+    NCSACAM_F            : 
+    NCSACAM_G            : 
+    NCSACAM_H            : 
+    NCSACAM_I            : 
+## ::: PT ::: ##     
+    ptA                  : 
+    ptB                  : 
+## ::: SINE GAUSSIAN ::: ##
+    sg150                :
+    sg200                :
+    sg250                : 
+    sg300                : 
+    sgA                  :  
+    sgB                  : 
+    sgC                  : 
+    sg-200s-1057Hz       : 
+    sg-200s-1257Hz       : 
+    sg-200s-1457Hz       : 
+    sg-200s-1657Hz       : 
+    sg-200s-1857Hz       : 
+    sg-200s-257Hz        : 
+    sg-200s-457Hz        : 
+    sg-200s-57Hz         : 
+    sg-200s-657Hz        : 
+    sg-200s-857Hz        : 
+## ::: WHITE NOISE BURST ::: ##
+    wnbA                 : 
+    wnbB                 : 
+    wnbC                 : 
+## ::: SINE DAMPED ::: ##
+    sd150                : 
+    sd200                : 
+    sd250                : 
+    sd300                : 
+    sd350                : 
+    sd400                : 
+    sd450                : 
+    sd500                :  
+    sineDamped-10s-100Hz :
+    sineDamped-10s-250Hz :
+    sineDamped-10s-500Hz :
+    sineDamped-10s-55Hz  :
+    sineDamped-1s-100Hz  :
+    sineDamped-1s-250Hz  :
+    sineDamped-1s-500Hz  :
+    sineDamped-1s-55Hz   :
+    sineDamped-50s-100Hz :
+    sineDamped-50s-250Hz :
+    sineDamped-50s-500Hz :
+    sineDamped-50s-55Hz  :
+
+## ::: TRAINING LIST DESCRIPTION ::: ## 
+
+TRAINING_LIST_INFO: >      # Optional space to breifly explain training list. Which waveforms were chosen and why etc ...
+ Add description here ... 
+
+###=========## :::::::: PARAMETERS FOR EVALUATING NEW CLASSIFIER :::::::: ###=========##
+
+# User advice: Run the background postprocesssing and examine the FAR v p_lambda plot to chose a FAR
+FALSE_ALARM_RATE :        # Target false alarm rate to use for XGB model evaluation
+
+## ::: EVALUATION PLOTTING OPTIONS ::: ##
+  
+PLOT_LLAMBDA_THRESHOLD : False      # True if you would like to see the distribution and threshold on the PySTAMPAS variable L_lambda.  
+
+SAVE_XGBOOST_TREE      : False      # True if you would like to save one of the XGBoost descion trees generated during the training
+# User advice: The XGBoost Tree is very interesting for understanding how the machine learning model weighs the different 
+# PySTAMPAS information that you give it for training. However, it is very large and can be difficult to read. 
+  
