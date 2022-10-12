@@ -33,7 +33,7 @@ FMEAN_FRANGE  : True     # Train model with: 'True'(recommended) -> mean/range, 
 XGB_CLASSIFIER_PARAMS:
 # User advice: leave field unchanged
     MAX_DEPTH     : 12        # XGB tree maximum depth, 12 is recommended
-    VERBOSITY     : 0         # The degree of verbosity. Valid values are 0 (silent) - 3 (debug).
+    VERBOSITY     : 1         # The degree of verbosity. Valid values are 0 (silent) - 3 (debug).
     REPRODUCEABLE : False     # Setting 'REPRODUCEABLE' to 'True' limits the random generators to a single seed.
     STATE_ID      : 42        # The random number seed is given by 'STATE_ID'. (only relevant if REPRODUCEABLE=True)
 
